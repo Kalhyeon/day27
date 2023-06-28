@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <title>Document</title>
+  <script>
+    $(document).ready(function() {
+      // 1. 이벤트가 발생하면
+      $('#btn').on('click', async function() {
+          // 2. 사용자가 입력한 값을 읽고
+        const d = {
+          value1: $('#value1').val(),
+          value2: $('#value2').val()
+        };
+        try {
+          // 3. 서버로 ajax 를 보내고 await 로 결과를 수신하고
+          const result = await $.ajax ({
+            url: 'http://localhost:8081/backend/rest4',
+            data: d
+          });
+          // 4. 결과를 출력한다.
+          $('#result').text(`더한 값: ${result}`)
+        }catch(err) {
+          console.log(err);
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <input type="text" id="value1" placeholder="첫 번째 값">
+  <input type="text" id="value2" placeholder="두 번째 값">
+  <button id="btn">덧셈 하기</button>
+  <p id="result"></p>
+</body>
+</html>

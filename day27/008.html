@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <title>영화 흥행 순위 api</title>
+  <script>
+    const key = '5e260ee8fea9126d3d69a4ce73d562ec';
+    const url = `http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json`;
+    $.ajax({
+      url:url + '?key=' + key + '&targetDt=20230627',
+      success:function(result) {
+        // success 는 작업이 성공하였다는 의미가 아닌
+        // 작업이 에러가 발생하지 않고 결과가 나왔다는 의미이다.
+        console.log(result.boxOfficeResult.dailyBoxOfficeList);
+        for(movie of result.boxOfficeResult.dailyBoxOfficeList) {
+          const html = `
+            <tr>
+              <td>${movie.rank}</td>
+              <td>${movie.movieNm}</td>
+              <td>${movie.rankInten}</td>
+              <td>${movie.openDt}</td>
+              <td>${movie.audiCnt}</td>
+              <td>${movie.audiAcc}</td>
+          `;
+          $('#tbody').append(html);
+        }
+      }
+    });
+  </script>
+</head>
+<body>
+  <table style="width: 100%;">
+    <thead>
+      <tr>
+        <th>순위</th><th>제목</th><th>지난 순위</th><th>개봉일</th><th>관객수</th><th>총관객수</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</body>
+</html>

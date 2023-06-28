@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <title>await~async 문법을 이용한 AJAX 제곱하기</title>
+  <script>
+    try{
+      // $.ajax() 는 비동기 실행이다.
+      // 결과값 9는 $.ajax() 가 종료되어야 정해진다.
+      // 비동기 코드의 리턴 값은 JS6 에서 Promise 라는 객체로 처리된다.
+      // await : 비동기 코드가 실행이 끝나고 결과가 리턴될 때 까지 기다린다.
+      // async : await 코드는 반드시 async 함수 내부에 있어야 한다.
+      const result = await $.ajax({
+        url: 'http://loaclhost:8081/backend/rest2?value=3'
+      });
+      console.log(result);
+    }catch(err) {
+      console.log(err);
+    }
+  </script>
+</head>
+<body>
+  
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <title>비동기 실행</title>
+  <script>
+    // AJAX 작업을 하는 데 A 작업이 끝나면 B 작업을 실행
+    // 연말정산을 하는데 건강보험공단에서 보험료 정보를 읽어온 다음 국세청을 이용해 수행한다.
+
+    // 콜백 지옥
+    $.ajax({
+      url: 'A',
+      success:function() {
+        $.ajax({
+          url: 'B',
+          success:function() {
+            $.ajax({
+              url: 'C',
+              success:function() {
+                alert('success');
+              }
+            });
+          }
+        });
+      }
+    });
+    // ES6 에서 try~catch 사용
+    try {
+      $.ajax({url: 'A'});
+      $.ajax({url: 'B'});
+      $.ajax({url: 'C'});
+    }catch {
+      // try 내부에서 오류가 발생하면 catch 로 옮겨간다.
+      console.log(err);
+    }
+  </script>
+</head>
+<body>
+  
+</body>
+</html>
